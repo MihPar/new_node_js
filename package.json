@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "finalhandler": "^1.2.0",
+    "serve-favicon": "^2.5.0"
+  }
+}
