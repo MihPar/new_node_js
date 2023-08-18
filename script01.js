@@ -83,6 +83,6 @@ const server = http.createServer(async function (req, res) {
   }
 });
 
-server.listen(4000, function () {
+server.listen(4000, '127.0.0.1', function () {
   console.log("Server was started at port localhost:4000");
 });
