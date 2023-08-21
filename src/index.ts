@@ -11,10 +11,10 @@ app.get('/', (req, res) => {
     }
 })
 app.get('/samurayes', (req, res) => {
-    res.send('Hello samurayes')
+    res.send('Hello samurayes!!!!!')
 })
 app.post('/samurayes', (req, res) => {
-    res.send('We have created samuray!!!!!')
+    res.send('We have created samuray')
 })
 app.get('/home', (req, res) => {
     res.sendFile(__dirname + '/pages/home.html')
