@@ -51,10 +51,14 @@ const server = http.createServer(async function (req, res) {
     //     }
     //     res.end();
     //   });
-
-        const data = await readFile('pages/home.html')
-        res.write(data)
-        res.end()
+        try {
+            const data = await readFile('pages/home.html')
+            res.write(data)
+            res.end()
+        } catch(err) {
+            res.write('some error')
+            res.end()
+        }
         break        
     case "/about":
       // const newData = fs.readFileSync('pages/about.html')
