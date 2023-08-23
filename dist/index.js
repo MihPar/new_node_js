@@ -6,6 +6,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const app = (0, express_1.default)();
 const port = 4000;
+const HTTP_STATUS = {
+    OK_200: 200,
+    CREATED_201: 201,
+    NO_CONTENT_204: 204,
+    BAD_REQUEST_400: 400,
+    NOT_FOUND_404: 404,
+};
+const jsonBodyMiddleware = express_1.default.json();
+app.use(jsonBodyMiddleware);
 const db = {
     courses: [
         { id: 1, title: 'front-end' },
@@ -15,14 +24,8 @@ const db = {
     ]
 };
 app.get('/courses', function (req, res) {
-    // res.send({message: 'Hello Express Yes!'})
-    // res.send('<h1>Hello Express Yes!!</h1>')
-    // res.json({message: 'Hello Express!'})
-    // res.json('Hello Express!')
-    // res.json(1000)
-    // res.sendStatus(404)
     let foundCourses = db.courses;
-    if (foundCourses) {
+    if (req.query.title) {
         foundCourses = foundCourses.filter(function (c) {
             return c.title.indexOf(req.query.title) > -1;
         });
@@ -32,17 +35,45 @@ app.get('/courses', function (req, res) {
 app.get('/courses/:id', function (req, res) {
     const foundCourses = db.courses.find(c => c.id === Number(req.params.id));
     if (!foundCourses) {
-        res.sendStatus(404);
+        res.sendStatus(HTTP_STATUS.NOT_FOUND_404);
         return;
     }
     res.json(foundCourses);
 });
-// app.get('/samuray', function(req, res) {
-//     res.send('Hello Samuray')
-// })
-// app.post ('/samuray', function(req, res) {
-//     res.send('We have create Samuray!!!')
-// })
+app.post('/courses', function (req, res) {
+    if (!req.body.title) {
+        res.sendStatus(HTTP_STATUS.BAD_REQUEST_400);
+        return;
+    }
+    const createdCourses = {
+        id: +(new Date()),
+        title: req.body.title
+    };
+    db.courses.push(createdCourses);
+    console.log(createdCourses);
+    res.status(HTTP_STATUS.CREATED_201).json(createdCourses);
+});
+app.delete('/courses/:id', function (req, res) {
+    db.courses = db.courses.filter(function (c) {
+        return c.id !== Number(req.params.id);
+    });
+    res.sendStatus(HTTP_STATUS.NO_CONTENT_204);
+});
+app.put('/courses/:id', function (req, res) {
+    if (!req.body.title) {
+        res.sendStatus(HTTP_STATUS.BAD_REQUEST_400);
+        return;
+    }
+    const foundCourse = db.courses.find(function (c) {
+        return c.id === Number(req.params.id);
+    });
+    if (!foundCourse) {
+        res.sendStatus(HTTP_STATUS.NOT_FOUND_404);
+        return;
+    }
+    foundCourse.title = req.body.title;
+    res.sendStatus(HTTP_STATUS.NO_CONTENT_204);
+});
 app.listen(port, '127.0.0.1', function () {
     console.log(`Server was started at port http://localhost:${port}`);
 });
