@@ -47,6 +47,27 @@ app.post('/courses', (req, res) => {
     db.courses.push(createCourses);
     res.status(201).json(createCourses);
 });
+app.delete('/courses/:id', function (req, res) {
+    db.courses = db.courses.filter(function (c) {
+        return c.id !== +req.params.id;
+    });
+    res.sendStatus(204);
+});
+app.put('/courses/:id', function (req, res) {
+    if (!req.body.title) {
+        res.sendStatus(404);
+        return;
+    }
+    const foundCourses = db.courses.find(function (c) {
+        return c.id === Number(req.params.id);
+    });
+    if (!foundCourses) {
+        res.sendStatus(404);
+        return;
+    }
+    foundCourses.title = req.body.title;
+    res.sendStatus(204);
+});
 app.listen(port, function () {
     console.log(`Server was started at port http://localhost:${port}`);
 });
