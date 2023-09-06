@@ -4,69 +4,44 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const product_route_1 = require("./routes/product_route");
+const address_route_1 = require("./routes/address_route");
 const app = (0, express_1.default)();
-const port = 4000;
-const middleware = express_1.default.json();
-app.use(middleware);
-const db = {
-    courses: [
-        { id: 1, title: 'front-end' },
-        { id: 2, title: 'back-end' },
-        { id: 3, title: 'SQL' },
-        { id: 4, title: 'PYTHON' }
-    ]
+const port = process.env.PORT || 4000;
+// const parseMiddleWare = bodyParser()
+// app.use(parseMiddleWare)
+let blaBlaMiddleWare = (req, res, next) => {
+    // @ts-ignore
+    req.blabla = 'Hello';
+    next();
 };
-app.get('/courses', (req, res) => {
-    let foundCourses = db.courses;
-    if (req.query.title) {
-        foundCourses = foundCourses.filter(function (c) {
-            return c.title.indexOf(req.query.title) > -1;
-        });
+let authGuardeMiddleWare = (req, res, next) => {
+    if (req.query.token === '123') {
+        next();
     }
-    res.json(foundCourses);
+    else {
+        res.json(401);
+    }
+};
+let requestCounter = 0;
+let requestCounterMiddleWare = (req, res, next) => {
+    requestCounter++;
+    next();
+};
+app.use('/product', product_route_1.productsRouter);
+app.use('/addresses', address_route_1.addressesRouter);
+app.use(requestCounterMiddleWare);
+app.use(blaBlaMiddleWare);
+app.use(authGuardeMiddleWare);
+app.get('/products', function (req, res) {
+    //@ts-ignore
+    const blabla = req.blabla;
+    res.send({ value: blabla + '!!!!' + requestCounter });
 });
-app.get('/courses/:id', (req, res) => {
-    const foundCourses = db.courses.find(function (c) {
-        return c.id === Number(req.params.id);
-    });
-    if (!foundCourses) {
-        res.sendStatus(404);
-        return;
-    }
-    res.json(foundCourses);
-});
-app.post('/courses', (req, res) => {
-    if (!req.body.title) {
-        res.sendStatus(404);
-        return;
-    }
-    const createCourses = {
-        id: Number(new Date()),
-        title: req.body.title
-    };
-    db.courses.push(createCourses);
-    res.status(201).json(createCourses);
-});
-app.delete('/courses/:id', function (req, res) {
-    db.courses = db.courses.filter(function (c) {
-        return c.id !== +req.params.id;
-    });
-    res.sendStatus(204);
-});
-app.put('/courses/:id', function (req, res) {
-    if (!req.body.title) {
-        res.sendStatus(404);
-        return;
-    }
-    const foundCourses = db.courses.find(function (c) {
-        return c.id === Number(req.params.id);
-    });
-    if (!foundCourses) {
-        res.sendStatus(404);
-        return;
-    }
-    foundCourses.title = req.body.title;
-    res.sendStatus(204);
+app.get('/users', function (req, res) {
+    //@ts-ignore
+    const blabla = req.blabla;
+    res.send({ value: blabla + ' from user' + requestCounter });
 });
 app.listen(port, function () {
     console.log(`Server was started at port http://localhost:${port}`);

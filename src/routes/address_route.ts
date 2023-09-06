@@ -3,6 +3,10 @@ export const addressesRouter = Router({})
 
 const addresseses = [{id: 1, value: 'Novay, 12'}, {id: 2, value: 'Staray 13'}]
 
+addressesRouter.get('/', (req: Request, res: Response) => {
+	res.send(addresseses)
+})
+
 addressesRouter.get('/:id', function(req: Request, res: Response) {
     // let result
     // for(let item of addresses) {
@@ -12,11 +16,11 @@ addressesRouter.get('/:id', function(req: Request, res: Response) {
     // }
     // res.json(result)
 
-    let result = addresseses.find(function(address) {
+    let address = addresseses.find(function(address) {
         return address.id === Number(req.params.id)
     })
-    if(result) {
-        res.json(result)
+    if(address) {
+        res.json(address)
     } else {
         res.status(404).json('Not found')
     }
