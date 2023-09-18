@@ -4,7 +4,7 @@ const products = [
   ];
   
   export const productsRepositories = {
-	findProducts(title: string | undefined) {
+	findProducts(title: string | null | undefined) {
 	  if (title) {
 		let filteredProducts = products.filter(function (p) {
 		  return p.title.indexOf(title) > -1;

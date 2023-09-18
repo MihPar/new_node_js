@@ -1,6 +1,6 @@
 import {Request, Response, Router} from 'express'
 import { productsRepositories } from '../repositories/products_repositories'
-import {body, validationResult} from 'express-validator'
+import {body} from 'express-validator'
 import { inputValidationMiddleWare } from '../middlewares/input_validation_middleware'
 
 export const productsRouter = Router({})

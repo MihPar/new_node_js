@@ -1,4 +1,9 @@
-// const db = {
+// type CourseType = {
+// 	id: number
+// 	title: string
+// }
+
+// const db: {coureses: CourseType[]} = {
 //     courses: [
 //         {id: 1, title: 'front-end'},
 //         {id: 2, title: 'back-end'},
@@ -60,7 +65,7 @@
 //         return c.id === Number(req.params.id)
 //     })
 //     if(!foundCourses) {
-//         res.sendStatus(404)
+//         res.sendStatus(400)
 //         return 
 //     }
 //     foundCourses.title = req.body.title
