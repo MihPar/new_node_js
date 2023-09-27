@@ -3,6 +3,7 @@ import express from 'express'
 import bodyParser from 'express'
 import { productsRouter } from './routes/product_route'
 import { addressesRouter } from './routes/address_route'
+import {runDb} from './repositories/db'
 
 
 const app = express()
@@ -51,6 +52,12 @@ app.use('/addresses', addressesRouter)
 // 	res.send({value: blabla + ' from user' + requestCounter})
 // })
 
-app.listen(port, function() {
-    console.log(`Server was started at port http://localhost:${port}`)
-})
+const startApp = async () => {
+	await rumDb()
+	app.listen(port, function() {
+		console.log(`Server was started at port http://localhost:${port}`)
+	})
+}
+
+startApp()
+
