@@ -1,11 +1,15 @@
-import {MongoClient} from 'mongodb'
+import { MongoClient } from 'mongodb'
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 export type ProductType = {
 	id: number
 	title: string
   }
 
-const mongoURI = process.env.mongoURI || 'mongoDb://0.0.0.0.27017'
+const mongoURI = process.env.MONGO_URL || 'mongodb+srv://MihPar:MihPar1981@cluster0.e2lfxsd.mongodb.net/?retryWrites=true&w=majority'
+console.log(process.env.MONGO_URL)
 
 export const client = new MongoClient(mongoURI)
 const db = client.db('shop')

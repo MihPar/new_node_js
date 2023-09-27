@@ -10,8 +10,7 @@ const app = express()
 
 const port = process.env.PORT || 4000
 
-const parseMiddleWare = bodyParser()
-app.use(parseMiddleWare)
+app.use(express.json())
 
 // let blaBlaMiddleWare = (req: Request, res: Response, next: NextFunction) => {
 // 	// @ts-ignore

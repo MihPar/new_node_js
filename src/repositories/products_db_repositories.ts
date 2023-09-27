@@ -1,12 +1,5 @@
 import { productsCollection, ProductType} from "./db";
 
-const products = [
-	{ id: 1, title: "tomato" },
-	{ id: 2, title: "orange" },
-  ];
-
- 
-  
   export const productsRepositories = {
 	async findProducts(title: string | null | undefined): Promise<ProductType[]> {
 		const filter: any = {}
