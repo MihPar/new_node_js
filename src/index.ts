@@ -53,7 +53,7 @@ app.use('/addresses', addressesRouter)
 // })
 
 const startApp = async () => {
-	await rumDb()
+	await runDb()
 	app.listen(port, function() {
 		console.log(`Server was started at port http://localhost:${port}`)
 	})

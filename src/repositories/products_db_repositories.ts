@@ -16,7 +16,7 @@ const products = [
 	  return productsCollection.find(filter).toArray()
 	},
 	async findProductById(id: number): Promise<ProductType | null> {
-		const product: ProductType | null = await productsCollection.find({id: id})
+		const product: ProductType | null = await productsCollection.findOne({id: id})
 		if(product) {
 		  return product;
 		} else {
@@ -33,7 +33,7 @@ const products = [
 	  },
 	  async updateProduct(id: number, title: string): Promise<boolean> {
 		const result = await productsCollection.updateOne({id: id}, {$set: {title: title}})
-		return result.matchCount === 1
+		return result.upsertedCount === 1
 	  },
 	  async deleteProduct(id: number): Promise<boolean> {
 		const result = await productsCollection.deleteOne({id: id})

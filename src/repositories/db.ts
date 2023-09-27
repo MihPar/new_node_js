@@ -5,11 +5,11 @@ export type ProductType = {
 	title: string
   }
 
-const mongoURI = process.env.mongoURI || 'mongoDb://0.0.0.0.27017/?maxPoolSize=206w=majority'
+const mongoURI = process.env.mongoURI || 'mongoDb://0.0.0.0.27017'
 
 export const client = new MongoClient(mongoURI)
 const db = client.db('shop')
-export const productsCollection = db('shop').collection<ProductType>('products')
+export const productsCollection = db.collection<ProductType>('products')
 
 export async function runDb() {
 	try {
