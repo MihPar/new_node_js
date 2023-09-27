@@ -1,6 +1,6 @@
-import { ProductType } from './../repositories/products_repositories';
+import { ProductType } from '../repositories/products_in_memory_repositories';
 import {Request, Response, Router} from 'express'
-import { productsRepositories } from '../repositories/products_repositories'
+import { productsRepositories } from '../repositories/products_db_repositories'
 import { inputValidationMiddleWare } from '../middlewares/input_validation_middleware'
 import { titleValidation } from '../middlewares/input_validation_middleware'
 
@@ -29,15 +29,15 @@ productsRouter.get('/:id', function(req: Request, res: Response) {
 productsRouter.put('/:id', titleValidation, inputValidationMiddleWare, async function(req: Request, res: Response) {
 	let isUpdated = await productsRepositories.updateProduct(Number(req.params.id), req.body.title)
 	if(isUpdated) {
-		const product = productsRepositories.findProductById(+req.params.id)
+		const product = await productsRepositories.findProductById(+req.params.id)
 		res.send(product)
 	} else {
 		res.send(404)
 	}
 })
 
-productsRouter.delete('/:id', function(req: Request, res: Response) {
-    let isDeleted = productsRepositories.deleteProduct(Number(req.params.id))
+productsRouter.delete('/:id', async function(req: Request, res: Response) {
+    let isDeleted = await productsRepositories.deleteProduct(Number(req.params.id))
 	if(isDeleted) {
 		res.send(204)
 	} else {

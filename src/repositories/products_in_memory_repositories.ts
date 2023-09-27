@@ -19,9 +19,13 @@ const products = [
 		return products;
 	  }
 	},
-	findProductById(id: number) {
+	async findProductById(id: number): Promise<ProductType | null> {
 	  const product = products.find((p) => p.id === id);
-	  return product;
+	  if(product) {
+		return product;
+	  } else {
+		return null
+	  }
 	},
 	async createProduct(title: string): Promise<ProductType> {
 	  const newProduct = {
@@ -42,7 +46,7 @@ const products = [
 		return false;
 	  }
 	},
-	deleteProduct(id: number) {
+	async deleteProduct(id: number): Promise<boolean> {
 	  for (let i = 0; i < products.length; i++) {
 		if (products[i].id === id) {
 		  products.splice(i, 1);
