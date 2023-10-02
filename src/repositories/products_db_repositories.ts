@@ -16,11 +16,7 @@ import { productsCollection, ProductType} from "./db";
 		  return null
 		}
 	  },
-	  async createProduct(title: string): Promise<ProductType> {
-		const newProduct = {
-		  id: Number(new Date()),
-		  title,
-		};
+	  async createProduct(newProduct: ProductType): Promise<ProductType> {
 		const result = await productsCollection.insertOne(newProduct)
 		return newProduct;
 	  },
