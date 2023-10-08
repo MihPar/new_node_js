@@ -1,9 +1,11 @@
+import { usersRouter } from './routes/users_router';
 import express from 'express'
 // import {NextFunction, Request, Response} from 'express'
 import bodyParser from 'express'
 import { productsRouter } from './routes/product_route'
 import { addressesRouter } from './routes/address_route'
 import {runDb} from './repositories/db'
+import { authRouter } from './routes/auth_router';
 
 
 const app = express()
@@ -34,6 +36,8 @@ app.use(express.json())
 
 app.use('/product', productsRouter)
 app.use('/addresses', addressesRouter)
+app.use('/users', usersRouter)
+app.use('/auth', authRouter)
 
 // app.use(requestCounterMiddleWare)
 // app.use(blaBlaMiddleWare)

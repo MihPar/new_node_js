@@ -8,12 +8,22 @@ export type ProductType = {
 	title: string
   }
 
+export type UserDBType = {
+		_id: any
+		userName: string
+		email: string
+		passwordHash: string
+		passwordSalt: string
+		createdAt: any
+}
+
 const mongoURI = process.env.MONGO_URL || 'mongodb+srv://MihPar:MihPar1981@cluster0.e2lfxsd.mongodb.net/?retryWrites=true&w=majority'
 console.log(process.env.MONGO_URL)
 
 export const client = new MongoClient(mongoURI)
 const db = client.db('shop')
 export const productsCollection = db.collection<ProductType>('products')
+export const userCollection = db.collection<UserDBType>('products')
 
 export async function runDb() {
 	try {
