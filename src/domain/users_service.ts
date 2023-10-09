@@ -1,4 +1,4 @@
-import { usersRepositiries } from './../repositories/user_db_repositories';
+import { usersRepositiries } from '../repositories/user_db_repositories';
 import { UserDBType } from "../repositories/db"
 import bcrypt from 'bcrypt'
 import {ObjectId} from 'mongodb'
@@ -19,6 +19,9 @@ export const usersService = {
 		return usersRepositiries.createUser(newUser)
 
 		
+	},
+	async findUserById(id: ObjectId): Promise<UserDBType | null> {
+		return await usersRepositiries.findUserById(id)
 	},
 	async checkCredentials(loginOrEmail: string, password: string) {
 		const user: any = await usersRepositiries.findByLoginOrEmail(loginOrEmail)
