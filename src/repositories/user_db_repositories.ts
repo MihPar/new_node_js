@@ -6,7 +6,7 @@ export const usersRepositiries = {
     return user
   },
   async findByLoginOrEmail(loginOrEmail: string) {
-	const user = await userCollection.findOne({sort: [{email: loginOrEmail}, userName: loginOrEmail]})
+	const user = await userCollection.findOne({sort: [{email: loginOrEmail}, {userName: loginOrEmail}]})
 	return user
   }
 };

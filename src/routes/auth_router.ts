@@ -8,8 +8,8 @@ authRouter.post("/", async function (req: Request, res: Response) {
     req.body.loginOrEmail,
     req.body.password
   );
-  if (checkResult.resultCode === 0) {
-    res.status(201).send(checkResult.data);
+  if (checkResult) {
+    res.sendStatus(201);
   } else {
     res.sendStatus(401);
   }

@@ -1,5 +1,5 @@
 import { usersService } from "./../domain/users_sercvice";
-import { Response } from "express";
+import { Request, Response } from "express";
 import { Router } from "express";
 
 export const usersRouter = Router({});
