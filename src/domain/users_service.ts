@@ -17,8 +17,6 @@ export const usersService = {
 			createdAt: new Date()
 		}		
 		return usersRepositiries.createUser(newUser)
-
-		
 	},
 	async findUserById(id: ObjectId): Promise<UserDBType | null> {
 		return await usersRepositiries.findUserById(id)
@@ -27,7 +25,7 @@ export const usersService = {
 		const user: any = await usersRepositiries.findByLoginOrEmail(loginOrEmail)
 		if(!user) return false
 		const passwordHash = await this._generateHash(password, user.passwordSalt)
-		if(user.Passwordhash !== passwordHash) {
+		if(user.passwordHash !== passwordHash) {
 			return false
 		} 
 		return true
